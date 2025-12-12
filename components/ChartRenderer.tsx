@@ -6,6 +6,14 @@ import {
   PointElement,
   LineElement,
   BarElement,
+  LineController,
+  BarController,
+  PieController,
+  DoughnutController,
+  RadarController,
+  PolarAreaController,
+  BubbleController,
+  ScatterController,
   Title,
   Tooltip,
   Legend,
@@ -24,6 +32,14 @@ ChartJS.register(
   PointElement,
   LineElement,
   BarElement,
+  LineController,
+  BarController,
+  PieController,
+  DoughnutController,
+  RadarController,
+  PolarAreaController,
+  BubbleController,
+  ScatterController,
   Title,
   Tooltip,
   Legend,
@@ -39,16 +55,16 @@ const backgroundPlugin = {
     const { ctx, width, height } = chart;
     ctx.save();
     ctx.globalCompositeOperation = 'destination-over';
-    
+
     // Resolve background color:
     // 1. Check direct plugin options (if passed as string via chartOptions)
     // 2. Check root options (where Gemini puts it)
     // 3. Default to white
-    
+
     let bgColor = typeof options === 'string' ? options : null;
-    
+
     if (!bgColor && chart.config.options?.customCanvasBackgroundColor) {
-        bgColor = chart.config.options.customCanvasBackgroundColor;
+      bgColor = chart.config.options.customCanvasBackgroundColor;
     }
 
     // Ensure we have a valid string, else white
@@ -83,14 +99,14 @@ const ChartRenderer: React.FC<ChartRendererProps> = ({ config, isDarkMode }) => 
     // IF CUSTOM BACKGROUND (e.g. Dark Mode requested by AI):
     // We trust the AI completely for colors. We do NOT inject our defaults.
     if (isCustomBg) {
-        return {
-            ...baseOptions,
-            plugins: {
-                ...baseOptions.plugins,
-                // Ensure the background plugin receives the color string as its option
-                customCanvasBackgroundColor: customBg
-            }
-        };
+      return {
+        ...baseOptions,
+        plugins: {
+          ...baseOptions.plugins,
+          // Ensure the background plugin receives the color string as its option
+          customCanvasBackgroundColor: customBg
+        }
+      };
     }
 
     // IF DEFAULT BACKGROUND (White):
@@ -102,44 +118,44 @@ const ChartRenderer: React.FC<ChartRendererProps> = ({ config, isDarkMode }) => 
         // Still register the plugin so white bg is drawn on export
         customCanvasBackgroundColor: '#ffffff',
         legend: {
-            ...baseOptions.plugins?.legend,
-            labels: {
-                color: '#334155', // Slate 700 default
-                font: { family: 'Inter, system-ui, sans-serif' },
-                ...baseOptions.plugins?.legend?.labels 
-            }
+          ...baseOptions.plugins?.legend,
+          labels: {
+            color: '#334155', // Slate 700 default
+            font: { family: 'Inter, system-ui, sans-serif' },
+            ...baseOptions.plugins?.legend?.labels
+          }
         },
         title: {
-            ...baseOptions.plugins?.title,
-            color: '#0f172a', // Slate 900 default
-            font: { family: 'Inter, system-ui, sans-serif', weight: 'bold' },
-            ...baseOptions.plugins?.title
+          ...baseOptions.plugins?.title,
+          color: '#0f172a', // Slate 900 default
+          font: { family: 'Inter, system-ui, sans-serif', weight: 'bold' },
+          ...baseOptions.plugins?.title
         }
       },
       scales: {
-          ...baseOptions.scales,
-          x: {
-              ...baseOptions.scales?.x,
-              ticks: { 
-                color: '#64748b', // Slate 500
-                ...baseOptions.scales?.x?.ticks 
-              },
-              grid: { 
-                color: '#e2e8f0', // Slate 200
-                ...baseOptions.scales?.x?.grid 
-              }
+        ...baseOptions.scales,
+        x: {
+          ...baseOptions.scales?.x,
+          ticks: {
+            color: '#64748b', // Slate 500
+            ...baseOptions.scales?.x?.ticks
           },
-          y: {
-              ...baseOptions.scales?.y,
-              ticks: { 
-                color: '#64748b', 
-                ...baseOptions.scales?.y?.ticks 
-              },
-              grid: { 
-                color: '#e2e8f0', 
-                ...baseOptions.scales?.y?.grid 
-              }
+          grid: {
+            color: '#e2e8f0', // Slate 200
+            ...baseOptions.scales?.x?.grid
           }
+        },
+        y: {
+          ...baseOptions.scales?.y,
+          ticks: {
+            color: '#64748b',
+            ...baseOptions.scales?.y?.ticks
+          },
+          grid: {
+            color: '#e2e8f0',
+            ...baseOptions.scales?.y?.grid
+          }
+        }
       }
     };
   }, [config]);
@@ -174,7 +190,7 @@ const ChartRenderer: React.FC<ChartRendererProps> = ({ config, isDarkMode }) => 
         <h2 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2">
           Preview
         </h2>
-        
+
         <div className="flex items-center gap-2">
           <div className="relative group">
             <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-dark-700 border border-transparent hover:border-gray-200 dark:hover:border-gray-700 rounded-md transition-all">
