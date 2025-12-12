@@ -1,0 +1,7 @@
+{
+  "name": "EasyGraph",
+  "description": "A professional, AI-powered chart generation tool. Upload data or describe your needs, attach reference images, and generate sleek, presentation-ready visualizations.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
